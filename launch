@@ -1,0 +1,4 @@
+#!/bin/bash
+
+nohup racket main.rkt > out.log 2>err.log&
+echo $$ > pid.log
