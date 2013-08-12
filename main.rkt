@@ -10,4 +10,8 @@
 (serve/servlet start
                #:listen-ip #f
                #:servlet-regexp #rx""
-               #:port 5674)
+               #:port 5674
+               #:quit #f
+               #:stateless #t
+               #:launch-browser? #f
+               #:banner #f)
