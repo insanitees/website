@@ -1,0 +1,3 @@
+#!/bin/bach
+echo $$ > pid.log
+racket main.rkt
