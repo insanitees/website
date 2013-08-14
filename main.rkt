@@ -31,14 +31,22 @@
     (define user (get-user! req users))
     (or 
      (for/first ([(rx serve) servlet-map] #:when (regexp-match? rx uri))
-       (serve req user))
+       (serve req (make-page-maker user) user))
      (raise (exn:dispatcher)))))
+
+;; make the function that builds a standard header for a page
+;; user? -> make-page/c
+(define ((make-page-maker user) title body)
+  (response/xexpr
+   `(html (head (title ,(~a title " for " (user-session-id user)))
+                (style ((type "text/css")) "p {text-align: center; font-size: 3em;}"))
+          ,body)))
 
 ;; request? [make-hash string? user?] -> user?
 ;; the the user for a key. make and add one if it doesn't exist
 (define (get-user! req users)
   (define (make-user!)
-    (define usr (user (~a (gensym 's))))
+    (define usr (user (string->bytes/utf-8 (~a (gensym 's)))))
     (hash-set! users (user-session-id usr) usr)
     usr)
   (define key
@@ -57,12 +65,11 @@
 (define-unit under-construction@
   (import)
   (export servlet^)
-
-  (define (serve req _)
-    (response/xexpr
-     `(html (head (title "Libertees: Coming Soon")
-                  (style ((type "text/css")) "p {text-align: center; font-size: 3em;}"))
-            (body (p "Under Construction")))))
+  
+  (define (serve req make-page _)
+    (make-page
+     "Libertees: Coming Soon"
+    `(body (p "Under Construction"))))
   (define path #rx".*"))
 
 (main)
