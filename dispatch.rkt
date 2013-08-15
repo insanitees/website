@@ -2,7 +2,12 @@
 #|
 this module provides bindings to launch the server
 |#
-(provide launch)
+(provide 
+ (contract-out
+  [launch (->* ()
+               #:rest (cons/c (unit/c (import) (export servlet^))
+                              (listof (unit/c (import) (export servlet^))))
+               any)]))
 (require web-server/servlet
          web-server/servlet-env
          web-server/dispatchers/dispatch)
