@@ -10,6 +10,6 @@
     (make-page
      "Libertees: Coming Soon"
     `(body (p "Under Construction"))))
-  (define path #rx".*"))
+  (define path #rx"^/\\.$"))
 
 (launch under-construction@)
