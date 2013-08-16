@@ -21,7 +21,7 @@ this module provides bindings to launch the server
   (serve/servlet 
    (dispatch units)
    #:servlets-root (current-directory)
-   #:extra-files-paths (list (build-path (current-directory) "scripts"))
+   #:extra-files-paths (list (build-path (current-directory) "styles"))
    #:servlet-path ""
    #:listen-ip #f
    #:servlet-regexp #rx""
@@ -56,5 +56,5 @@ this module provides bindings to launch the server
 (define (page-maker title body)
   (response/xexpr
    `(html (head (title ,title)
-                (style ((type "text/css")) "p {text-align: center; font-size: 3em;}"))
+                (link ((rel "stylesheet") (type "text/css") (href "main.css"))))
           ,body)))
