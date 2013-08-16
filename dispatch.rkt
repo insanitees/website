@@ -43,7 +43,6 @@ this module provides bindings to launch the server
     (or 
      (for/first ([(rx serve) servlet-map] #:when (regexp-match? rx path))
        (define user (get-user! req users))
-       (displayln users)
        (serve req (make-page-maker user) user))
      (raise (exn:dispatcher)))))
 
@@ -73,9 +72,9 @@ this module provides bindings to launch the server
 (define ((make-page-maker user) title body)
   (response/xexpr
    #:cookies (list (make-cookie SESSION-KEY (user-session-id user)))
-   `(html (head (title ,(~a title " for " (user-session-id user)))
+   `(html (head (title ,title)
                 (style ((type "text/css")) "p {text-align: center; font-size: 3em;}"))
-          ,body)))
+          (,@body ,(user-session-id user)))))
 
 ;; request? [make-hash string? user?] -> user?
 ;; the the user for a key. make and add one if it doesn't exist
