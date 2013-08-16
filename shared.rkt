@@ -5,13 +5,10 @@ This module provides bindings meant to be shared by all servlets, as well as def
 (provide 
  ;; signature for a servlet
  servlet^
+ (struct-out user)
  (contract-out
   ;; creates a page with a standard header 
-  [make-page/c contract?]
-  ;; user struct
-  [user (-> string? user?)]
-  [user? (-> any/c boolean?)]
-  [user-session-id (-> user? string?)]))
+  [make-page/c contract?]))
 
 (require web-server/servlet/servlet-structs
          web-server/http/request-structs
@@ -25,4 +22,4 @@ This module provides bindings meant to be shared by all servlets, as well as def
 (define make-page/c (-> string? (and/c xexpr? (compose (curry equal? 'body) first))
                         can-be-response?))
 
-(struct user (session-id) #:transparent)
+(define-struct/contract user ([session-id string?]) #:transparent)

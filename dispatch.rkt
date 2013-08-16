@@ -14,6 +14,7 @@ this module provides bindings to launch the server
 (require "shared.rkt")
 
 (define SESSION-KEY "session")
+(struct in:user user (time))
 
 ;; run the server
 (define (launch . units)
@@ -65,13 +66,11 @@ this module provides bindings to launch the server
 ;; the the user for a key. make and add one if it doesn't exist
 (define (get-user! req users)
   (define (make-user!)
-    (define usr (user (~a (gensym 's))))
+    (define usr (in:user (~a (gensym 's)) (current-milliseconds)))
     (hash-set! users (user-session-id usr) usr)
     usr)
   (define key 
     (client-cookie-value
      (findf (lambda (c) (string=? SESSION-KEY (client-cookie-name c)))
             (request-cookies req))))
-  (displayln key)
-  (displayln users)
   (if key (hash-ref users key make-user!) (make-user!)))
