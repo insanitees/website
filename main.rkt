@@ -6,7 +6,7 @@
   (import)
   (export servlet^)
   
-  (define (serve req make-page _)
+  (define (serve req make-page)
     (make-page
      "Libertees: Coming Soon"
     `(body (p "Under Construction"))))
