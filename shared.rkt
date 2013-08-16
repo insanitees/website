@@ -8,7 +8,8 @@ This module provides bindings meant to be shared by all servlets, as well as def
  (struct-out user)
  (contract-out
   ;; creates a page with a standard header 
-  [make-page/c contract?]))
+  [make-page/c contract?]
+  [debug (parameter/c boolean?)]))
 
 (require web-server/servlet/servlet-structs
          web-server/http/request-structs
@@ -23,3 +24,5 @@ This module provides bindings meant to be shared by all servlets, as well as def
                         can-be-response?))
 
 (define-struct/contract user ([session-id string?]) #:transparent)
+
+(define debug (make-parameter #f))
