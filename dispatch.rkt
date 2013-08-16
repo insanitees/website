@@ -14,7 +14,7 @@ this module provides bindings to launch the server
 (require "shared.rkt")
 
 (define SESSION-KEY "session")
-(define SESSION-LIFETIME 60 #;(* 60 60 24)) ;; a day in seconds
+(define SESSION-LIFETIME (* 60 60 24)) ;; a day in seconds
 (struct in:user user ([time #:mutable]) #:transparent)
 
 ;; run the server
