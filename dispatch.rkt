@@ -28,12 +28,7 @@ this module provides bindings to launch the server
 ;; [listof servlet^] -> (-> request? may-be-responce?)
 ;; make the dispatcher for main
 (define (dispatch servlets)
-  (define servlet-map
-    (for/hash ([serv^ servlets])
-      (define-values/invoke-unit serv^
-        (import)
-        (export servlet^))
-      (values path serve)))
+  (define servlet-map (make-servlet-map servlets))
   (define users (make-hash))
   (lambda (req)
     (define uri (path->string (url->path (request-uri req))))
@@ -42,6 +37,15 @@ this module provides bindings to launch the server
      (for/first ([(rx serve) servlet-map] #:when (regexp-match? rx uri))
        (serve req (make-page-maker user) user))
      (raise (exn:dispatcher)))))
+
+;; [listof servlet^] -> [hash regexp? (-> request? make-page/c user? may-be-request?)]
+;; creates the servlet map, involking all the units
+(define (make-servlet-map servlets)
+  (for/hash ([serv^ servlets])
+    (define-values/invoke-unit serv^
+      (import)
+      (export servlet^))
+    (values path serve)))
 
 ;; make the function that builds a standard header for a page
 ;; user? -> make-page/c
@@ -58,14 +62,15 @@ this module provides bindings to launch the server
     (define usr (user (string->bytes/utf-8 (~a (gensym 's)))))
     (hash-set! users (user-session-id usr) usr)
     usr)
+  (define raw-id
+    (bindings-assq
+     #"session"
+     (request-bindings/raw req)))
   (define key
-    (match
-      (bindings-assq
-       #"session"
-       (request-bindings/raw req))
-    [(? binding:form? b)
-     (string->number
-      (bytes->string/utf-8
-       (binding:form-value b)))]
+    (match raw-id
+      [(? binding:form? b)
+       (string->number
+        (bytes->string/utf-8
+         (binding:form-value b)))]
       [_ #f]))
   (if key (hash-ref users key make-user!) (make-user!)))
