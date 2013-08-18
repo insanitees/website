@@ -19,7 +19,7 @@ This module provides values to handle paypal integration
             (data-amount (~a amount)))))
 
 (define buy-now-button
-  (make-paypal-button "paypal-button.min.js?merchant=" "cart"))
+  (make-paypal-button "paypal-button.min.js?merchant=" "buynow"))
 
 (define add-to-cart-button 
   (make-paypal-button "paypal-button-minicart.min.js?merchant=" "cart"))
