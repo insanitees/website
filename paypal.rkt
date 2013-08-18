@@ -35,20 +35,17 @@ This module provides values to handle paypal integration
   
   ;; see https://developer.paypal.com/webapps/developer/docs/classic/ipn/integration-guide/IPNIntro/
   ;; for callback information
-  (define (serve req? make-page)
-    (make-page `(body ())))
+  (define (serve req make-page)
+    (if (verify req)
+        (handle-valid-IPN-request req)
+        (raise-bad-paypal-IPN req)))
   
-  #;(define (get-reciever-information req)
-    )
-  #;(define (get-transaction-information req)
-    )
-  #;(define (get-buyer-info req)
-    )
-  #;(define (get-address req)
-    )
-  #;(define (get-payment-info req)
-    )
-  (define (verity req)
+  (define (handle-valid-IPN-request req)
+    #f)
+  
+  ;; request? -> boolean?
+  ;; could we validate the IPN message
+  (define (verify req)
     ;; todo: validate https certs
     (define req-uri (request-uri req))
     (define validate-url
@@ -59,8 +56,20 @@ This module provides values to handle paypal integration
                    [host "www.sandbox.paypal.com"]
                    [scheme "https"]))
     (define resp (port->string (get-pure-port validate-url)))
-    (and (equal? resp "VALID")
-         (raise (exn:insanitees:bad-paypal-IPN #;todo))))
+    (equal? resp "VALID"))
+  
+  #;(define (get-reciever-information req)
+    )
+  #;(define (get-transaction-information req)
+    )
+  #;(define (get-buyer-info req)
+    )
+  ;; request? -> string?
+  ;; get raw string of the address
+  #;(define (get-address req)
+    )
+  #;(define (get-payment-info req)
+    )
   
   ;; request bytes (-> bytes A) -> (maybe A)
   (define (load-binding req key convert)
