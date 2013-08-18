@@ -9,9 +9,7 @@ This module provides values to handle paypal integration
   ;; get an add-to-cart button
   [add-to-cart-button make-paypal-button/c]))
 
-(require "shared.rkt" "paypal-credentials.rkt" xml)
-(require web-server/http/request-structs)
-(require net/url)
+(require xml)
 
 (define make-paypal-button/c (-> string? (and/c number? real? (curry < 0)) xexpr?))
 (define ((make-paypal-button url button-name) product-name amount)
