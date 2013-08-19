@@ -1,0 +1,25 @@
+body {
+	font-family: 'Roboto', sans-serif;
+	background-color: #eee;
+}
+
+nav {
+	font-size: 2em;
+	font-weight: 300;
+	text-transform: uppercase;
+	background-color: #666;
+}
+
+nav a {
+	color: #ccc;
+}
+
+nav a:hover {
+	background-color: #333;
+	color: #fff;
+}
+
+footer {
+	background-color: #556270;
+	color: #ddd;
+}
