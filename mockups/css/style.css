@@ -19,6 +19,14 @@ nav a:hover {
 	color: #fff;
 }
 
+.megatron {
+	background-color: #4ECDC4;
+}
+
+.item {
+	background-color: white;
+}
+
 footer {
 	background-color: #556270;
 	color: #ddd;
