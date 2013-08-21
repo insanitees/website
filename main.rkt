@@ -12,4 +12,20 @@
     `(body (p "Under Construction"))))
   (define path #rx"^/\\.$"))
 
-(launch under-construction@)
+(define-unit list@
+  (import)
+  (export servlet^)
+  (define path #rx"^/list")
+  (define (serve req make-page)
+    (make-page 
+     "Its a List!!!"
+     `(body
+       ,@(fold-files (lambda (f t l) 
+                       (if (not (equal? t 'file))
+                           l
+                           (cons (file->value f) l)))
+                     null
+                     (build-path (current-directory) "list-test"))))))
+                     
+
+(launch list@ under-construction@)

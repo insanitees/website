@@ -21,7 +21,8 @@ this module provides bindings to launch the server
   (serve/servlet 
    (dispatch units)
    #:servlets-root (current-directory)
-   #:extra-files-paths (list (build-path (current-directory) "styles"))
+   #:extra-files-paths (list (build-path (current-directory) "styles")
+                             (build-path (current-directory) "list-test"))
    #:servlet-path ""
    #:listen-ip #f
    #:servlet-regexp #rx""
