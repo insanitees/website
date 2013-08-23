@@ -1,5 +1,5 @@
 #lang racket
-(require "dispatch.rkt" "shared.rkt")
+(require "dispatch.rkt" "shared.rkt" [prefix-in paypal: "paypal.rkt"])
 
 ;; test servlet^
 (define-unit under-construction@
@@ -16,16 +16,19 @@
   (import)
   (export servlet^)
   (define path #rx"^/list")
+  (define (map-files func p)
+    (fold-files (lambda (f t l)
+                  (if (not (equal? t 'file))
+                      l
+                      (cons (func f) l)))
+                null
+                p)) 
   (define (serve req make-page)
     (make-page 
      "Its a List!!!"
      `(body
-       ,@(fold-files (lambda (f t l) 
-                       (if (not (equal? t 'file))
-                           l
-                           (cons (file->value f) l)))
-                     null
-                     (build-path (current-directory) "list-test"))))))
+       ,@(map-files (lambda (f) (paypal:render-resource (apply paypal:resource (file->value f))))
+                    (build-path (current-directory) "resources/paypal"))))))
                      
 
 (launch list@ under-construction@)
