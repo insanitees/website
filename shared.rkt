@@ -5,14 +5,9 @@ This module provides bindings meant to be shared by all servlets, as well as def
 (provide 
  ;; signature for a servlet
  servlet^
- ;; our exceptions
- (struct-out exn:insanitees)
- (struct-out exn:insanitees:bad-paypal-IPN)
  (contract-out
   ;; creates a page with a standard header 
-  [make-page/c contract?]
-  [raise-bad-paypal-IPN (-> request? any)]
-  [debug (parameter/c boolean?)]))
+  [make-page/c contract?]))
 
 (require web-server/servlet/servlet-structs
          web-server/http/request-structs
@@ -25,10 +20,3 @@ This module provides bindings meant to be shared by all servlets, as well as def
 
 (define make-page/c (-> string? (and/c xexpr? (compose (curry equal? 'body) first))
                         can-be-response?))
-
-(define debug (make-parameter #f))
-
-(struct exn:insanitees exn () #:transparent)
-(struct exn:insanitees:bad-paypal-IPN exn:insanitees (req) #:transparent)
-(define (raise-bad-paypal-IPN req)
-  (raise (exn:insanitees:bad-paypal-IPN "Bad paypal IPN" (current-continuation-marks) req)))
