@@ -1,0 +1,31 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #eee;
+}
+
+nav {
+    font-size: 2em;
+    font-weight: 300;
+    text-transform: uppercase;
+    background-color: #666;
+    a {
+        color: #ccc;
+        &:hover {
+            background-color: #333;
+            color: #fff;
+        }
+    }
+}
+
+.megatron {
+    background-color: #4ECDC4;
+}
+
+.item {
+    background-color: white;
+}
+
+footer {
+    background-color: #556270;
+    color: #ddd;
+}

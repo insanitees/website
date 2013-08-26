@@ -1,87 +1,123 @@
 body {
   margin: 0;
-  padding: 0; }
+  padding: 0;
+}
 
 .content {
-  margin: 24px 0px; }
+  margin: 24px 0px;
+}
 
 /* bootstrip */
 .container {
   margin-right: auto;
-  margin-left: auto; }
+  margin-left: auto;
+}
 
 .container:before,
 .container:after {
   display: table;
-  content: " "; }
+  content: " ";
+}
 
 .container:after {
-  clear: both; }
+  clear: both;
+}
 
 .container:before,
 .container:after {
   display: table;
-  content: " "; }
+  content: " ";
+}
 
 .container:after {
-  clear: both; }
+  clear: both;
+}
 
 .text-left {
-  text-align: left; }
+  text-align: left;
+}
 
 .text-right {
-  text-align: right; }
+  text-align: right;
+}
 
 .text-center {
-  text-align: center; }
+  text-align: center;
+}
 
 /* MEDIA QUERY NONSENSE */
 @media (min-width: 768px) and (max-width: 991px) {
   .container {
-    max-width: 728px; } }
+    max-width: 728px;
+    }
+}
+
 @media (min-width: 992px) {
   .container {
-    max-width: 940px; } }
+    max-width: 940px;
+  }
+}
+
 @media (min-width: 1200px) {
   .container {
-    max-width: 1170px; } }
+    max-width: 1170px;
+  }
+}
+
 /* end bootstrip */
+
 nav {
   padding-top: 10px;
-  padding-bottom: 10px; }
-  nav a {
+  padding-bottom: 10px;
+
+  a {
     text-decoration: none;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 12px;
-    padding-right: 12px; }
+    padding-right: 12px;
+  }
+}
 
 ul.nav {
   margin: 0;
-  padding: 0; }
-  ul.nav li {
-    list-style: none;
-    display: inline; }
+  padding: 0;
+    li {
+      list-style: none;
+      display: inline;
+    }
+}
 
 .megatron {
   width: 100%;
   height: 320px;
-  margin-bottom: 18px; }
+  margin-bottom: 18px;
+}
 
 .item {
   float: left;
   margin-right: 18px;
-  margin-bottom: 18px; }
-  .item:nth-child(3n+1) {
-    margin-right: 0px; }
+  margin-bottom: 18px;
+  
+  &:nth-child(3n+1) {
+    margin-right: 0px;
+  }
+}
 
 @media (min-width: 1200px) {
   .item {
     width: 378px;
-    height: 378px; } }
+    height: 378px;
+  }
+}
+
 @media (max-width: 992px) {
   .item {
     width: 318px;
-    height: 318px; } }
+    height: 318px;
+  }
+}
+
 footer {
-  min-height: 250px; }
+  min-height: 250px;
+}
