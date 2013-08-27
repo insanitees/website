@@ -30,5 +30,7 @@
        ,@(map-files (lambda (f) (paypal:render-resource (apply paypal:resource (file->value f))))
                     (build-path (current-directory) "resources/paypal"))))))
                      
-
-(launch list@ under-construction@)
+(define servlets
+  `(,under-construction@
+    ,@(if-enabled debug (list list@) null)))
+(apply launch servlets)
