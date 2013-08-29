@@ -37,11 +37,12 @@ this module provides bindings to launch the server
 (define (dispatch servlets)
   (define servlet-map (make-servlet-map servlets))
   (lambda (req)
-    (define path (path->string (url->path (request-uri req))))
-    (or 
-     (for/first ([(rx serve) servlet-map] #:when (regexp-match? rx path))
-       (serve req page-maker))
-     (raise (exn:dispatcher)))))
+    (with-handlers ([exn? (lambda (e) (raise e))])
+      (define path (path->string (url->path (request-uri req))))
+      (or 
+       (for/first ([(rx serve) servlet-map] #:when (regexp-match? rx path))
+         (serve req page-maker))
+       (raise (exn:dispatcher))))))
 
 ;; [listof servlet^] -> [hash regexp? (-> request? make-page/c user? may-be-request?)]
 ;; creates the servlet map, involking all the units
