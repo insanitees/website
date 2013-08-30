@@ -17,9 +17,9 @@ this module provides bindings to launch the server
 (define SESSION-LIFETIME (* 60 60 24)) ;; a day in seconds
 
 ;; run the server
-(define (launch . units)
+(define (launch . units #:on-error [on-error (lambda (_ e) (raise e))])
   (serve/servlet 
-   (dispatch units)
+   (dispatch units on-error)
    #:servlets-root (current-directory)
    #:extra-files-paths (list (build-path (current-directory) "resources")
                              (build-path (current-directory) "list-test"))
@@ -32,12 +32,12 @@ this module provides bindings to launch the server
    #:launch-browser? #f
    #:banner? #f))
 
-;; [listof servlet^] -> (-> request? may-be-responce?)
+;; [listof servlet^] [request? exn? -> may-be-response?] -> (-> request? may-be-response?)
 ;; make the dispatcher for main
-(define (dispatch servlets)
+(define (dispatch servlets on-error)
   (define servlet-map (make-servlet-map servlets))
   (lambda (req)
-    (with-handlers ([exn? (lambda (e) (raise e))])
+    (with-handlers ([exn? (lambda (e) (on-error req e))])
       (define path (path->string (url->path (request-uri req))))
       (or 
        (for/first ([(rx serve) servlet-map] #:when (regexp-match? rx path))
