@@ -8,7 +8,7 @@
   
   (define (serve req make-page)
     (make-page
-     "Libertees: Coming Soon"
+     "Insanitees: Coming Soon"
     `(body (p "Under Construction"))))
   (define path #rx"^/\\.$"))
 
